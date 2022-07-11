@@ -103,21 +103,4 @@ public class MemberController {
         return "members/myInfo";
     }
 
-
-//    @PostConstruct
-//    public void createMember() {
-//        for (int i = 0; i < 30; i++) {
-//            Member member = new Member("lsek" + i, "lsek@arc" + i + "d");
-//            memberService.save(member);
-//        }
-//        Member member = new Member();
-//        member.setName("lsek");
-//        member.setPassword("1");
-//        member.setEmail("ad@ad.com");
-//        Address address = new Address();
-//        address.setCity("서울");
-//        address.setStreet("경리단길");
-//        member.setAddress(address);
-//        memberService.save(member);
-//    }
 }

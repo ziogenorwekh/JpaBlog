@@ -85,30 +85,4 @@ public class ArticleController {
         return "redirect:/article/articleList";
     }
 
-//    @PostConstruct
-//    public void articleCreate() {
-//
-//        Article article = new Article();
-//        article.setTitle("제목");
-//        article.setContents("내용");
-//        article.setcDate(new Date());
-//        Member byEmail = memberService.findByEmail("ad@ad.com");
-//        article.setMember(byEmail);
-//        articleService.save(article);
-//
-////        Article one = articleService.findOne(8L);
-//        Article one = articleService.findByTitle("제목");
-//        Member member = memberService.findByEmail("ad@ad.com");
-//        for (int i = 0; i < 4; i++) {
-//            Comment comment = new Comment();
-//            comment.setcDate(new Date());
-//            comment.setArticle(one);
-//            comment.setComment("내가 만든 게시글이야" + i);
-//            comment.setMember(member);
-////            member.getComments().add(comment);
-//            one.getComments().add(comment);
-////            memberService.update(member);
-//            articleService.save(one);
-//        }
-//    }
 }
