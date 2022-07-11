@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Info</title>
+    <base href="/">
+</head>
+<body>
+<div id="headFont">
+    <h1>Jpa Blog</h1>
+    <a href="members/memberList">홈</a>
+    <a href="members/create">회원가입</a>
+    <a th:if="${session.login} == null" href="members/login">로그인</a>
+    <a th:if="${session.login} != null" href="members/logout">로그아웃</a>
+    <!--    <a href="login">로그인</a>-->
+    <!--    <a href="logout">로그아웃</a>-->
+    <a href="article/articleList">게시글</a>
+    <a href="members/myInfo">내정보</a>
+    <hr>
+</div>
+<h3>
+    Member Info
+</h3>
+<hr>
+
+<!--/*@thymesVar id="member" type="lsek.learning.jpablog.domain.Member"*/-->
+<div>
+    Id : <span th:text="${member.id}"/>
+</div>
+<div>
+    email : <span th:text="${member.email}"/>
+</div>
+<div>
+    name : <span th:text="${member.name}"/>
+</div>
+</body>
+</html>

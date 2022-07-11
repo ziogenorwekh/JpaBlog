@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #list {
+            display: grid;
+            grid-template-columns: repeat(5, auto);
+        }
+
+        #list2 {
+            display: grid;
+            grid-template-columns: repeat(5, auto);
+        }
+    </style>
+</head>
+<body>
+<div id="headFont">
+    <h1>Jpa Blog</h1>
+    <a href="members/memberList">홈</a>
+    <a href="members/create">회원가입</a>
+    <a th:if="${session.login} == null" href="members/login">로그인</a>
+    <a th:if="${session.login} != null" href="members/logout">로그아웃</a>
+    <!--    <a href="login">로그인</a>-->
+    <!--    <a href="logout">로그아웃</a>-->
+    <a href="article/articleList">게시글</a>
+    <a href="members/myInfo">내정보</a>
+    <a href="article/addArticle">글쓰기</a>
+    <hr>
+</div>
+
+
+<div id="list2">
+    <div>게시물 번호</div>
+    <div>제목</div>
+    <div>생성 일</div>
+    <div>업데이트 일</div>
+    <div>작성한 회원</div>
+</div>
+
+<!--/*@thymesVar id="article" type="lsek.learning.jpablog.domain.Article"*/-->
+<div id="list" th:each="article : ${articles}">
+    <div th:text="${article.id}"/>
+    <a th:href="@{article/articleInfo/{id}(id=${article.id})}">
+        <div th:text="${article.title}"/>
+    </a>
+    <div th:text="${article.cDate}"/>
+    <div th:text="${article.uDate}"/>
+    <div th:text="${article.member.name}"></div>
+</div>
+
+</body>
+</html>

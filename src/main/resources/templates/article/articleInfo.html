@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <title>Article Info</title>
+</head>
+<body>
+<div id="headFont">
+    <h1>Jpa Blog</h1>
+    <a href="members/memberList">홈</a>
+    <a href="members/create">회원가입</a>
+    <a th:if="${session.login} == null" href="members/login">로그인</a>
+    <a th:if="${session.login} != null" href="members/logout">로그아웃</a>
+    <!--    <a href="login">로그인</a>-->
+    <!--    <a href="logout">로그아웃</a>-->
+    <a href="article/articleList">게시글</a>
+    <a href="members/myInfo">내정보</a>
+    <hr>
+</div>
+
+<div>
+    <h3>Article Info</h3>
+    <hr>
+    <div>
+        <h2>제목</h2><br>
+        <!--/*@thymesVar id="article" type="lsek.learning.jpablog.domain.Article"*/-->
+        <span th:text="${article.title}"/>
+    </div>
+    <div>
+        내용 : <!--/*@thymesVar id="article" type="lsek.learning.jpablog.domain.Article"*/-->
+        <span th:text="${article.contents}"></span>
+    </div>
+    <div>
+        작성자 : <span th:text="${article.member.name}"/>
+    </div>
+    <hr>
+    <div>
+        댓글 <!--/*@thymesVar id="article" type="lsek.learning.jpablog.domain.Article"*/--><br>
+        <div th:each="comment : ${article.getComments}">
+            <span th:text="${comment.member.name}"/> : <span th:text="${comment.comment}"/>
+        </div>
+<!--                <span th:text="${article.getComments}"/>-->
+    </div>
+    <div>
+        생성일 : <span th:text="${article.cDate}"/>
+    </div>
+    <div>
+        업데이트일 : <!--/*@thymesVar id="article" type="lsek.learning.jpablog.domain.Article"*/-->
+        <span th:text="${article.uDate}"></span>
+    </div>
+</div>
+<hr>
+<div>
+    <form method="post">
+        댓글 : <input type="text" name="comment" id="comment">
+        <input type="submit" value="제출">
+    </form>
+</div>
+<div th:if="${session.login != null and session.login == article.member.id}">
+    <a href="article/updateArticle">수정하기</a>
+    <a href="article/deleteArticle">삭제하기</a>
+</div>
+</body>
+</html>

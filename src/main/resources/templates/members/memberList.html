@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+    <title>Member List</title>
+    <style>
+        #list {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+        }
+
+        #list2 {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+        }
+    </style>
+    <script>
+        // $.ajax("list","GET",dataType)
+        // window.onload = function () {
+        //     fetchList();
+        //     document.getElementById("btnNext").addEventListener('click', fetchList);
+        // }
+        //
+        // function fetchList() {
+        //     fetch("list")
+        //         .then(response => response.json())
+        //         .then(displayList);
+        // }
+        //
+        // function displayList(list) {
+        //     list.forEach(member => {
+        //         document.getElementById("list").innerHTML +=
+        //             `<div>${id}</div>
+        //             <div>${email}</div>
+        //             <div>${name}</div>`
+        //     });
+        // }
+    </script>
+</head>
+<body>
+<div id="headFont">
+    <h1>Jpa Blog</h1>
+    <a href="members/memberList">홈</a>
+    <a href="members/create">회원가입</a>
+    <a th:if="${session.login} == null" href="members/login">로그인</a>
+    <a th:if="${session.login} != null" href="members/logout">로그아웃</a>
+<!--    <a href="login">로그인</a>-->
+<!--    <a href="logout">로그아웃</a>-->
+    <a href="article/articleList">게시글</a>
+    <a href="members/myInfo">내정보</a>
+    <hr>
+</div>
+<!--<p>-->
+<!--    <button id="btnNext">다음</button>-->
+<!--</p>-->
+<div id="list2">
+    <div>번호</div>
+    <div>이메일</div>
+    <div>이름</div>
+</div>
+<div th:each="member :${members}" id="list">
+    <!--/*@thymesVar id="member" type="lsek.learning.jpablog.domain.Member"*/-->
+    <a th:href="@{/members/memberInfo/{id}(id=${member.id})}">
+        <div th:text="${member.id}"/>
+    </a>
+    <div th:text="${member.email}"/>
+    <div th:text="${member.name}"/>
+    <!--    </div>-->
+</div>
+
+
+</body>
+</html>

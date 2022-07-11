@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <base href="/">
+</head>
+<body>
+<div id="headFont">
+    <h1>Jpa Blog</h1>
+    <a href="members/memberList">홈</a>
+    <a href="members/create">회원가입</a>
+    <a th:if="${session.login} == null" href="members/login">로그인</a>
+    <a th:if="${session.login} != null" href="members/logout">로그아웃</a>
+    <!--    <a href="login">로그인</a>-->
+    <!--    <a href="logout">로그아웃</a>-->
+    <a href="article/articleList">게시글</a>
+    <a href="members/myInfo">내정보</a>
+    <hr>
+</div>
+
+<form action="members/login" method="post">
+    email : <input type="email" id="email" name="email" th:value="${error}"><br/>
+    pwd : <input type="password" id="password" name="password">
+    <div th:if="${infoError}" th:text="#{login.error}"></div>
+    <input type="submit" value="로그인">
+</form>
+<!--/*@thymesVar id="loginError" type="com.example.springframwork.controller.MemberController"*/-->
+<!--<div th:if="${loginError}" th:text="#{login.error}" style="color: red"></div>-->
+
+</body>
+</html>
