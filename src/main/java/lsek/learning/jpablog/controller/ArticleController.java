@@ -59,6 +59,11 @@ public class ArticleController {
         return "article/articleInfo";
     }
 
+//    @GetMapping("article/articleInfo/comment")
+//    public String commentInfo(Long id,Model model){
+//        Article article = articleService.findOne(id);
+//    }
+
     @PostMapping("article/articleInfo/{id}")
     public String addComment(@PathVariable Long id, @RequestParam("comment") String comments, HttpSession session) {
         Long login = (Long) session.getAttribute("login");

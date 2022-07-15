@@ -4,6 +4,13 @@
     <base href="/">
     <meta charset="UTF-8">
     <title>Article Info</title>
+    <script th:inline="javascript">
+        function showComment() {
+            document.getElementById("co").innerText = 댓글 : <div th:each="comment : ${article.getComments}">
+                <span th:text="${comment.member.name}"/> : <span th:text="${comment.comment}"/>
+            </div>
+        }
+    </script>
 </head>
 <body>
 <div id="headFont">
@@ -35,12 +42,13 @@
         작성자 : <span th:text="${article.member.name}"/>
     </div>
     <hr>
-    <div>
-        댓글 <!--/*@thymesVar id="article" type="lsek.learning.jpablog.domain.Article"*/--><br>
-        <div th:each="comment : ${article.getComments}">
-            <span th:text="${comment.member.name}"/> : <span th:text="${comment.comment}"/>
-        </div>
-<!--                <span th:text="${article.getComments}"/>-->
+    <button onclick="showComment()">댓글보기</button>
+    <div id="co">
+<!--        댓글 &lt;!&ndash;/*@thymesVar id="article" type="lsek.learning.jpablog.domain.Article"*/&ndash;&gt;<br>-->
+<!--        <div th:each="comment : ${article.getComments}">-->
+<!--            <span th:text="${comment.member.name}"/> : <span th:text="${comment.comment}"/>-->
+<!--        </div>-->
+        <!--                <span th:text="${article.getComments}"/>-->
     </div>
     <div>
         생성일 : <span th:text="${article.cDate}"/>
