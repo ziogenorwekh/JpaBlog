@@ -15,6 +15,49 @@
             grid-template-columns: repeat(5, auto);
         }
     </style>
+    <script>
+        let page = 0;
+
+        window.onload = function () {
+            fetchList();
+            document.getElementById("btnNext").addEventListener("click", fetchList);
+        };
+
+        function fetchList() {
+            fetch("/article/articleList/ajax?count=4&page=" + page++)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(displayList);
+        }
+
+        function displayList(list) {
+            list.forEach(convert);
+            // let html = '';
+            // list.forEach(html +=
+            //     `<div>${member.id}</div><div>${member.email}</div><div>${member.name}</div>`
+            // );
+            // document.getElementById("list").innerHTML += html;
+        //     <!--<div id="list" th:each="article : ${articles}">-->
+        //     <!--    <div th:text="${article.id}"/>-->
+        //     <!--    <a th:href="@{article/articleInfo/{id}(id=${article.id})}">-->
+        //     <!--        <div th:text="${article.title}"/>-->
+        // <!--    </a>-->
+        //     <!--    <div th:text="${article.cDate}"/>-->
+        //     <!--    <div th:text="${article.uDate}"/>-->
+        //     <!--    <div th:text="${article.member.name}"></div>-->
+            function convert(article) {
+                if(article.uDate == null)
+                    article.uDate = ''
+                // console.log(member);
+                document.getElementById("list").innerHTML +=
+                    `<div>${article.id}</div><div><a href="article/articleInfo/${article.id}"> ${article.title}</a></div>
+<div>${article.cDate}</div>
+<div>${article.uDate}</div>
+<div>${article.member.name}</div>`
+            }
+        }
+    </script>
 </head>
 <body>
 <div id="headFont">
@@ -39,16 +82,19 @@
     <div>업데이트 일</div>
     <div>작성한 회원</div>
 </div>
-
+<p>
+    <button id="btnNext">다음</button>
+</p>
 <!--/*@thymesVar id="article" type="lsek.learning.jpablog.domain.Article"*/-->
-<div id="list" th:each="article : ${articles}">
-    <div th:text="${article.id}"/>
-    <a th:href="@{article/articleInfo/{id}(id=${article.id})}">
-        <div th:text="${article.title}"/>
-    </a>
-    <div th:text="${article.cDate}"/>
-    <div th:text="${article.uDate}"/>
-    <div th:text="${article.member.name}"></div>
+<div id="list">
+<!--<div id="list" th:each="article : ${articles}">-->
+<!--    <div th:text="${article.id}"/>-->
+<!--    <a th:href="@{article/articleInfo/{id}(id=${article.id})}">-->
+<!--        <div th:text="${article.title}"/>-->
+<!--    </a>-->
+<!--    <div th:text="${article.cDate}"/>-->
+<!--    <div th:text="${article.uDate}"/>-->
+<!--    <div th:text="${article.member.name}"></div>-->
 </div>
 
 </body>

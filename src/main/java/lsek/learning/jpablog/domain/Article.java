@@ -1,6 +1,8 @@
 package lsek.learning.jpablog.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -10,14 +12,17 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ARTICLE_ID", nullable = false)
     private Long id;
 
+//    @JsonIgnore
     private String title;
 
+//    @JsonIgnore
     private String contents;
 
     @Temporal(TemporalType.DATE)
@@ -27,6 +32,7 @@ public class Article {
     @Temporal(TemporalType.DATE)
     private Date uDate;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "article", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Comment> comments = new ArrayList<>();
 

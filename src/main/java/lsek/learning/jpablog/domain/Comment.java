@@ -1,5 +1,7 @@
 package lsek.learning.jpablog.domain;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import javax.xml.crypto.Data;
 import java.util.Date;
@@ -14,6 +16,7 @@ public class Comment {
     private String comment;
 
     @Temporal(TemporalType.DATE)
+    @CreationTimestamp
     private Date cDate;
 
     @ManyToOne
@@ -31,6 +34,7 @@ public class Comment {
 
     public void setMember(Member member) {
         this.member = member;
+        this.member.getComments().add(this);
     }
 
     public Article getArticle() {

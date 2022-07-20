@@ -35,7 +35,7 @@
         <span th:text="${article.title}"/>
     </div>
     <div>
-        내용 : <!--/*@thymesVar id="article" type="lsek.learning.jpablog.domain.Article"*/-->
+        내용 : <br/><!--/*@thymesVar id="article" type="lsek.learning.jpablog.domain.Article"*/-->
         <span th:text="${article.contents}"></span>
     </div>
     <div>
@@ -48,7 +48,7 @@
         <div th:each="comment : ${article.getComments}">
             <span th:text="${comment.member.name}"/> : <span th:text="${comment.comment}"/>
         </div>
-        <span th:text="${article.getComments}"/>
+<!--        <span th:text="${article.getComments}"/>-->
     </div>
     <div>
         생성일 : <span th:text="${article.cDate}"/>

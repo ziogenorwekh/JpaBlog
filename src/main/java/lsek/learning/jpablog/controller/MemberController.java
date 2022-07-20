@@ -47,10 +47,10 @@ public class MemberController {
 //        return
     }
 
-    @GetMapping("/members/memberList")
-    public String memberList() {
-        return "members/memberList";
-    }
+//    @GetMapping("/members/memberList")
+//    public void memberList() {
+////        return "members/memberList";
+//    }
 
 
     @GetMapping("members/memberInfo/{id}")
@@ -83,6 +83,9 @@ public class MemberController {
         }
     }
 
+    @GetMapping("/**")
+    public void access() {
+    }
     @GetMapping("/members/logout")
     public String logout(HttpSession session) {
         session.invalidate();

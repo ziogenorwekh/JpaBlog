@@ -7,8 +7,10 @@ import lsek.learning.jpablog.exception.NotFoundArticle;
 import lsek.learning.jpablog.repo.ArticleRepository;
 import lsek.learning.jpablog.repo.MemberRepository;
 import org.aspectj.weaver.ast.Not;
+import org.hibernate.usertype.LoggableUserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,13 +37,10 @@ public class ArticleService {
     }
 
     public Long commentUpdate(Article article, Comment comment, Long memberId) {
-        comment.setcDate(new Date());
+//        comment.setcDate(new Date());
         comment.setArticle(article);
         Member member = memberRepository.findById(memberId).get();
         comment.setMember(member);
-        // ?
-//        article.getComments().add(comment);
-        member.getComments().add(comment);
         articleRepository.save(article);
         return article.getId();
     }
@@ -72,4 +71,12 @@ public class ArticleService {
         }
         throw new NotFoundArticle("게시물 없음");
     }
+
+    public List<Article> findArticles(Pageable pageable) {
+
+        Page<Article> articles = articleRepository.findAll(pageable);
+        List<Article> articleList = articles.getContent();
+        return articleList;
+    }
+    
 }

@@ -24,8 +24,7 @@
         };
 
         function fetchList() {
-            fetch("/members/memberList/ajax?count=4&page=" + page++)
-            // fetch("/members/memberList")
+            fetch("/members/memberList/ajax?page=" + page++)
                 .then(function (response) {
                     return response.json();
                 })
@@ -36,9 +35,11 @@
             list.forEach(convert);
 
             function convert(member) {
+                // <a th:href="@{/members/memberInfo/{id}(id=${member.id})}">-->
                 console.log(member);
                 document.getElementById("list").innerHTML +=
-                    `<div>${member.id}</div><div>${member.email}</div><div>${member.name}</div>`
+                    `<div><a href="/members/memberInfo/${member.id}">${member.id}</a></div>
+<div>${member.email}</div><div>${member.name}</div>`
             }
         }
     </script>
@@ -65,13 +66,13 @@
     <div>이름</div>
 </div>
 <div id="list">
-<!--<div th:each="member :${members}" id="list">-->
-<!--    &lt;!&ndash;/*@thymesVar id="member" type="lsek.learning.jpablog.domain.Member"*/&ndash;&gt;-->
-<!--    <a th:href="@{/members/memberInfo/{id}(id=${member.id})}">-->
-<!--        <div th:text="${member.id}"/>-->
-<!--    </a>-->
-<!--    <div th:text="${member.email}"/>-->
-<!--    <div th:text="${member.name}"/>-->
+    <!--<div th:each="member :${members}" id="list">-->
+    <!--    &lt;!&ndash;/*@thymesVar id="member" type="lsek.learning.jpablog.domain.Member"*/&ndash;&gt;-->
+    <!--    <a th:href="@{/members/memberInfo/{id}(id=${member.id})}">-->
+    <!--        <div th:text="${member.id}"/>-->
+    <!--    </a>-->
+    <!--    <div th:text="${member.email}"/>-->
+    <!--    <div th:text="${member.name}"/>-->
     <!--    </div>-->
 </div>
 
