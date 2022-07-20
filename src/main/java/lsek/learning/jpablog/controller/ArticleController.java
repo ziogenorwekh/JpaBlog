@@ -90,4 +90,33 @@ public class ArticleController {
         return "redirect:/article/articleList";
     }
 
+    @PostConstruct
+    public void createArticle() {
+        Long[] ids = new Long[]{
+                31L, 34L, 43L,44L
+        };
+        for (int i = 0; i < 50; i++) {
+            Member member = memberService.findOne(ids[(int) (Math.random() * 3)]);
+            Article article = new Article();
+            // 97 ~ 122
+            char[] chars = new char[10];
+            for (int j = 0; j < chars.length; j++) {
+                char c = (char) ((int) (Math.random() * 122) + 97);
+                chars[j] = c;
+            }
+            String newTitle = String.copyValueOf(chars);
+            article.setTitle(newTitle);
+
+            article.setTitle(
+                    """
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+                                    Eveniet incidunt numquam sunt tempora voluptatem. 
+                                    A aperiam deleniti in magni natus nemo omnis possimus praesentium recusandae, 
+                                    reiciendis rerum velit vitae voluptates
+                            """
+
+            );
+            article.setMember(member);
+        }
+    }
 }

@@ -70,9 +70,11 @@ public class MemberService {
         return member;
     }
 
-    public List<Member> findMembersEach6() {
-        PageRequest pageRequest = PageRequest.of(0, 6);
-        Page<Member> all = memberRepository.findAll(pageRequest);
+    public List<Member> findMembers(Pageable pageable) {
+//        PageRequest pageRequest = PageRequest.of(0, 6);
+        Page<Member> all = memberRepository.findAll(pageable);
+        System.out.println("all.getTotalElements() = " + all.getTotalElements());
+        System.out.println("all.getTotalPages() = " + all.getTotalPages());
         List<Member> content = all.getContent();
         return content;
     }

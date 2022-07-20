@@ -7,13 +7,19 @@ import lsek.learning.jpablog.exception.DuplicateUniqueEmail;
 import lsek.learning.jpablog.exception.NotFoundMember;
 import lsek.learning.jpablog.service.ArticleService;
 import lsek.learning.jpablog.service.MemberService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
+import java.net.URI;
 import java.util.List;
 
 @Controller
@@ -26,12 +32,26 @@ public class MemberController {
     }
 
 
-    @GetMapping("members/memberList")
-    public String list(Model model) {
-        List<Member> members = memberService.findAll();
-        model.addAttribute("members", members);
+
+//    @GetMapping("members/memberList")
+//    public String list(Model model) {
+//        List<Member> members = memberService.findAll();
+//        model.addAttribute("members", members);
+//        return "members/memberList";
+//    }
+
+    @GetMapping("/members/memberList/ajax")
+    @ResponseBody
+    public List<Member> members(@PageableDefault(size = 4,sort = "id") Pageable pageable) {
+        return memberService.findMembers(pageable);
+//        return
+    }
+
+    @GetMapping("/members/memberList")
+    public String memberList() {
         return "members/memberList";
     }
+
 
     @GetMapping("members/memberInfo/{id}")
     public String memberInfo(@PathVariable("id") Long id, Model model) {

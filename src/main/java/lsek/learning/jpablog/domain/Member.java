@@ -1,5 +1,7 @@
 package lsek.learning.jpablog.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +28,20 @@ public class Member {
     @Column(unique = true, updatable = false)
     private String email;
 
+    @JsonIgnore
     @Column
     private String password;
 
+    @JsonIgnore
     @Embedded
     private Address address;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Comment> comments = new ArrayList<>();
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Article> articles = new ArrayList<>();
 
@@ -106,5 +112,5 @@ public class Member {
                 ", comments=" + comments.size() +
                 ", articles=" + articles +
                 '}';
-    }
+    } 
 }

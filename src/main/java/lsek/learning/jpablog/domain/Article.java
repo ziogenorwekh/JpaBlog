@@ -1,6 +1,8 @@
 package lsek.learning.jpablog.domain;
 
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import javax.xml.crypto.Data;
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ public class Article {
     private String contents;
 
     @Temporal(TemporalType.DATE)
+    @CreationTimestamp
     private Date cDate;
 
     @Temporal(TemporalType.DATE)
