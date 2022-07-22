@@ -1,5 +1,6 @@
 package lsek.learning.jpablog.controller;
 
+import lombok.RequiredArgsConstructor;
 import lsek.learning.jpablog.domain.Address;
 import lsek.learning.jpablog.domain.Member;
 import lsek.learning.jpablog.exception.AccessError;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +25,11 @@ import java.net.URI;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class MemberController {
 
+    final private BCryptPasswordEncoder bCryptPasswordEncoder;
     final private MemberService memberService;
-
-    public MemberController(MemberService memberService) {
-        this.memberService = memberService;
-    }
-
 
 
 //    @GetMapping("members/memberList")
@@ -69,19 +68,22 @@ public class MemberController {
         return "members/loginForm";
     }
 
-    @PostMapping("members/login")
-    public String login(@ModelAttribute Member member,
-                        HttpSession session, RedirectAttributes attributes) {
-        try {
-            Member login = memberService.login(member.getEmail(), member.getPassword());
-            session.setAttribute("login", login.getId());
-            return "redirect:/members/memberList";
-        } catch (AccessError error) {
-            attributes.addFlashAttribute("infoError", true);
-            attributes.addFlashAttribute("error", member.getEmail());
-            return "redirect:/members/login";
-        }
-    }
+//    @PostMapping("members/login")
+//    public String login(@ModelAttribute Member member,
+//                        HttpSession session, RedirectAttributes attributes) {
+//        try {
+//            System.out.println("member = " + member);
+//            String encPwd = bCryptPasswordEncoder.encode(member.getPassword());
+//            System.out.println("encPwd = " + encPwd);
+//            Member login = memberService.login(member.getEmail(), encPwd);
+//            session.setAttribute("login", login.getId());
+//            return "redirect:/members/memberList";
+//        } catch (AccessError error) {
+//            attributes.addFlashAttribute("infoError", true);
+//            attributes.addFlashAttribute("error", member.getEmail());
+//            return "redirect:/members/login";
+//        }
+//    }
 
     @GetMapping("/**")
     public void access() {
@@ -103,6 +105,7 @@ public class MemberController {
             , RedirectAttributes attributes) {
         try {
             member.setAddress(address);
+            member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
             memberService.save(member);
             return "redirect:/members/memberList";
         } catch (DuplicateUniqueEmail e) {
@@ -115,11 +118,6 @@ public class MemberController {
     @GetMapping("members/myInfo")
     public String myInfoForm(Model model,HttpSession session) {
         Long id = (Long) session.getAttribute("login");
-        // Spring security X
-
-        if (id == null) {
-            return "redirect:/members/login";
-        }
         Member one = memberService.findOne(id);
         System.out.println("one = " + one);
         model.addAttribute("member", one);

@@ -19,7 +19,7 @@
     <hr>
 </div>
 
-<form action="members/login" method="post">
+<form action="/login" method="post">
     email : <input type="email" id="email" name="email" th:value="${error}"><br/>
     pwd : <input type="password" id="password" name="password">
     <div th:if="${infoError}" th:text="#{login.error}"></div>

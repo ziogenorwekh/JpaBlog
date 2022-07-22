@@ -8,6 +8,7 @@ import lsek.learning.jpablog.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -92,6 +93,7 @@ public class ArticleController {
 //        return "article/updateArticle";
 //    }
 
+//    @Secured()
     @GetMapping("article/updateArticle/ajax")
     @ResponseBody
     public Article updateArticle(@PathVariable Long id) {
@@ -99,6 +101,7 @@ public class ArticleController {
         Article article = articleService.findOne(id);
         return article;
     }
+
 
     @PostMapping("article/updateArticle")
     public String updateArticle(@ModelAttribute Article article, @SessionAttribute("login") Member member) {
